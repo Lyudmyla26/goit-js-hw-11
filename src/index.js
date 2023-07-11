@@ -39,7 +39,7 @@ const handleClick = async () => {
 
   try {
     const { data } = await request.fetchPhotos();
-    isShown = data.hits.length;
+    const isShown = data.hits.length;
     if (isShown === data.totalHits) {
       load.style.display = 'none';
       Notiflix.Notify.info(
