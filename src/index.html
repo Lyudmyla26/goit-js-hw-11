@@ -4,21 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Page title</title>
-    <link rel="stylesheet" href="./sass/index.scss" />
+    <link rel="stylesheet" href="../src/sass/style.css" />
   </head>
   <body>
-    <form class="search-form" id="search-form">
-      <input
-        type="text"
-        name="searchQuery"
-        autocomplete="off"
-        placeholder="Пошук фото..."
-      />
-      <button type="submit">Пошук</button>
-    </form>
+    <div class="container">
+      <form class="search-form" id="search-form">
+        <input
+          type="text"
+          name="searchQuery"
+          autocomplete="off"
+          placeholder="Пошук фото..."
+        />
+        <button type="submit">Пошук</button>
+      </form>
 
-    <div class="galery-list"></div>
-    <button type="button" class="load-more">Load more</button>
+      <div class="galery-list"></div>
+      <button type="button" class="load-more">Load more</button>
+    </div>
     <script type="module" src="./index.js"></script>
   </body>
 </html>

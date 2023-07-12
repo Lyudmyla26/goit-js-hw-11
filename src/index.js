@@ -6,18 +6,18 @@ const galery = document.querySelector('.galery-list');
 const load = document.querySelector('.load-more');
 load.style.display = 'none';
 const request = new UnsplashAPI();
-let totalImages = 0;
+
 async function handleFormSubmit(e) {
   e.preventDefault();
   const info = e.currentTarget.elements['searchQuery'].value.trim();
   request.query = info;
   request.page = 1;
   galery.innerHTML = '';
-
+  request.per_page = 40;
   try {
     const dates = await request.fetchPhotos();
     const { data } = dates;
-    totalImages = 0;
+
     if (!data.hits.length) {
       load.style.display = 'none';
       Notiflix.Notify.failure(
@@ -40,13 +40,13 @@ const handleClick = async () => {
 
   try {
     const { data } = await request.fetchPhotos();
-    totalImages += data.hits.length;
-    if (totalImages >= data.totalHits) {
-      load.style.display = 'none';
-      Notiflix.Notify.info(
-        ' Were sorry, but youve reached the end of search results'
-      );
-    }
+
+    // if (totalImages === data.totalHits) {
+    //   load.style.display = 'none';
+    //   Notiflix.Notify.info(
+    //     ' Were sorry, but youve reached the end of search results'
+    //   );
+    // }
     createGallery(data.hits);
   } catch (err) {
     console.log(err.message);
@@ -95,9 +95,4 @@ function createGallery(arry) {
     .join('');
   galery.insertAdjacentHTML('beforeend', markup);
   lightbox.refresh();
-  totalImages += data.hits.length;
-
-  if (totalImages >= data.totalHits) {
-    load.style.display = 'none';
-  }
 }
