@@ -4,9 +4,10 @@ import { lightbox } from '../src/simplelightbox';
 const form = document.querySelector('.search-form');
 const galery = document.querySelector('.galery-list');
 const load = document.querySelector('.load-more');
+const alertPopup = document.querySelector('.alert');
 load.style.display = 'none';
 const request = new UnsplashAPI();
-
+let isAlertVisible = false;
 async function handleFormSubmit(e) {
   e.preventDefault();
   const info = e.currentTarget.elements['searchQuery'].value.trim();
@@ -40,7 +41,12 @@ const handleClick = async () => {
 
   try {
     const { data } = await request.fetchPhotos();
-
+    const totalPages = data.totalHits / 40;
+    console.log(totalPages);
+    if (request.page > totalPages) {
+      load.style.display = 'none';
+      return toggleAlertPopup();
+    }
     // if (totalImages === data.totalHits) {
     //   load.style.display = 'none';
     //   Notiflix.Notify.info(
@@ -52,7 +58,17 @@ const handleClick = async () => {
     console.log(err.message);
   }
 };
-
+function toggleAlertPopup() {
+  if (isAlertVisible) {
+    return;
+  }
+  isAlertVisible = true;
+  alertPopup.classList.add('is-visible');
+  setTimeout(() => {
+    alertPopup.classList.remove('is-visible');
+    isAlertVisible = false;
+  }, 3000);
+}
 form.addEventListener('submit', handleFormSubmit);
 load.addEventListener('click', handleClick);
 function createGallery(arry) {
